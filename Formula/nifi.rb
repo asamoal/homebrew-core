@@ -18,7 +18,15 @@ class Nifi < Formula
     (bin/"nifi").write_env_script libexec/"bin/nifi.sh",
                                   Language::Java.overridable_java_home_env("11").merge(NIFI_HOME: libexec)
   end
-
+  
+  service do
+    run [bin/"nifi", "start"]
+    keep_alive true
+    log_path libexec/logs
+    error_log_path libexec/logs
+    working_dir libexec
+  end
+  
   test do
     system bin/"nifi", "status"
   end
