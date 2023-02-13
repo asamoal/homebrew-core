@@ -14,9 +14,11 @@ class Nifi < Formula
 
   def install
     libexec.install Dir["*"]
+    rm Dir[libexec/"bin/*.bat"]
 
-    (bin/"nifi").write_env_script libexec/"bin/nifi.sh",
-                                  Language::Java.overridable_java_home_env("11").merge(NIFI_HOME: libexec)
+    bin.install libexec/"bin/nifi.sh" => "nifi"
+    bin.env_script_all_files libexec/"bin/",
+                             Language::Java.overridable_java_home_env("11").merge(NIFI_HOME: libexec)
   end
   
   service do
