@@ -20,7 +20,15 @@ class NifiRegistry < Formula
     bin.env_script_all_files libexec/"bin/",
                              Language::Java.overridable_java_home_env.merge(NIFI_REGISTRY_HOME: libexec)
   end
-
+  
+  service do
+    run [bin/"nifi-registry", "start"]
+    keep_alive false
+    log_path libexec/"logs/nifi-registry-app.log"
+    error_log_path libexec/"logs/nifi-registry-app.log"
+    working_dir libexec
+  end
+  
   test do
     output = shell_output("#{bin}/nifi-registry status")
     assert_match "Apache NiFi Registry is not running", output
