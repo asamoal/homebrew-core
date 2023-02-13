@@ -21,9 +21,9 @@ class Nifi < Formula
   
   service do
     run [bin/"nifi", "start"]
-    keep_alive true
-    log_path libexec/logs
-    error_log_path libexec/logs
+    keep_alive false
+    log_path libexec/"logs/nifi-app.log"
+    error_log_path libexec/"logs/nifi-app.log"
     working_dir libexec
   end
   
